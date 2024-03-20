@@ -9,6 +9,18 @@
 
 
 
+
+// value --------------------------------+
+// delimiter -------------------------+  |
+// parameter --------------------+    |  |
+// prefix ------------------+    |    |  |
+//                          |    |    |  |
+//                         --parameter=value
+//                         |                |
+//                         +----------------+
+//                                  |
+// argument ------------------------+
+
 namespace carpc::tools::parameters {
 
    struct Description
@@ -30,7 +42,7 @@ namespace carpc::tools::parameters {
 
    namespace cmdline {
 
-      static const tValue default_prefix{ "--" };
+      static const tValue default_prefix{ "" };
       static const tValue default_delimiter{ "=" };
 
    }
@@ -44,7 +56,7 @@ namespace carpc::tools::parameters {
 
    namespace config {
 
-      static const tValue default_prefix{ "--" };
+      static const tValue default_prefix{ "" };
       static const tValue default_delimiter{ "=" };
 
    }

@@ -25,13 +25,27 @@ namespace carpc::tools::parameters {
       public:
          bool is_exist( const tParameter& parameter ) const;
 
+         // Returns the value of requested parameter name.
+         // Return value is a pair:
+         //    - first:
+         //       - 'value' if parameter exists and has value
+         //       - 'invalid_value' in other cases
+         //    - second:
+         //       - true if parameter exists
+         //       - false if not
          std::pair< tValueOpt, bool > value( const tParameter& parameter ) const;
          template< typename T >
             std::pair< std::optional< T >, bool > value( const tParameter& parameter ) const;
 
-         // Returns a pair:
-         //    - if parameter exists will return found value and true.
-         //    - if parameters does not exist will return 'default_value' and true.
+         // Returns the value of requested parameter name.
+         // Return value is a pair:
+         //    - first:
+         //       - value if parameter exists and has value
+         //       - 'default_value' if parameter does not has value
+         //       - 'default_value' in other cases
+         //    - second:
+         //       - true if parameter exists
+         //       - false if not
          std::pair< tValue, bool > value_or( const tParameter& parameter, const tValue& default_value ) const;
          template< typename T >
             std::pair< T, bool > value_or( const tParameter& parameter, const T& default_value ) const;
@@ -39,10 +53,10 @@ namespace carpc::tools::parameters {
          void print( ) const;
 
       protected:
-         CmdLine::tSptr    mp_cmdline = nullptr;
-         Env::tSptr        mp_env = nullptr;
-         Config::tSptr     mp_config = nullptr;
-         std::vector< Base::tSptr > m_params;
+         CmdLine::tSptr    mp_cmdline  = nullptr;
+         Env::tSptr        mp_env      = nullptr;
+         Config::tSptr     mp_config   = nullptr;
+         std::vector< Base::tSptr >    m_params;
    };
 
 

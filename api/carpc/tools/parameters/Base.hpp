@@ -20,10 +20,27 @@ namespace carpc::tools::parameters {
       public:
          bool is_exist( const tParameter& parameter ) const;
 
+         // Returns the value of requested parameter name.
+         // Return value is a pair:
+         //    - first:
+         //       - 'value' if parameter exists and has value
+         //       - 'invalid_value' in other cases
+         //    - second:
+         //       - true if parameter exists
+         //       - false if not
          std::pair< tValueOpt, bool > value( const tParameter& parameter ) const;
          template< typename T >
             std::pair< std::optional< T >, bool > value( const tParameter& parameter ) const;
 
+         // Returns the value of requested parameter name.
+         // Return value is a pair:
+         //    - first:
+         //       - value if parameter exists and has value
+         //       - 'default_value' if parameter does not has value
+         //       - 'default_value' in other cases
+         //    - second:
+         //       - true if parameter exists
+         //       - false if not
          std::pair< tValue, bool > value_or( const tParameter& parameter, const tValue& default_value ) const;
          template< typename T >
             std::pair< T, bool > value_or( const tParameter& parameter, const T& default_value ) const;
