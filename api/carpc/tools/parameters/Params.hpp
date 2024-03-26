@@ -21,6 +21,7 @@ namespace carpc::tools::parameters {
 
       public:
          void print( ) const;
+         bool exists( const char* const name ) const;
          const Parameter* const find( const char* const name ) const;
          const char* const value( const char* const name ) const;
          const char* const value_or( const char* const name, const char* const default_value ) const;

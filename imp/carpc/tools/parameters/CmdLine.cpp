@@ -104,7 +104,7 @@ CmdLine::tSptr CmdLine::create( int argc, char** argv )
       {
          // 
          SYS_ERR( "unexpected short parameter value" );
-         // return nullptr;
+         return nullptr;
       }
 
       params.push_back( Parameter{ p_argument, p_value } );

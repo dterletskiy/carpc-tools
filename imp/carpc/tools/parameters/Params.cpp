@@ -64,6 +64,11 @@ const Parameter* const Params::find( const char* const name ) const
    return nullptr;
 }
 
+bool Params::exists( const char* const name ) const
+{
+   return nullptr != find( name );
+}
+
 const char* const Params::value( const char* const name ) const
 {
    if( const Parameter* const param = find( name ) )

@@ -19,6 +19,7 @@ namespace carpc::tools::parameters {
 
       public:
          void print( ) const;
+         bool exists( const char* const name ) const;
          const Parameter* const find( const char* const name ) const;
 
       protected:

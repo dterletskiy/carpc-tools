@@ -28,6 +28,11 @@ const Parameter* const Base::find( const char* const name ) const
    return nullptr;
 }
 
+bool Base::exists( const char* const name ) const
+{
+   return nullptr != find( name );
+}
+
 void Base::print( ) const
 {
    const char* line = "----------------------------------------------";
