@@ -16,41 +16,14 @@ namespace carpc::tools::parameters {
          using tSptr = std::shared_ptr< Base >;
 
       public:
-         Params(
-               int argc, char** argv, char** envp,
-               const tMap& default_parameters = { }
-            );
+         Params( int argc, char** argv, char** envp );
          ~Params( ) = default;
 
       public:
-         bool is_exist( const tParameter& parameter ) const;
-
-         // Returns the value of requested parameter name.
-         // Return value is a pair:
-         //    - first:
-         //       - 'value' if parameter exists and has value
-         //       - 'invalid_value' in other cases
-         //    - second:
-         //       - true if parameter exists
-         //       - false if not
-         std::pair< tValueOpt, bool > value( const tParameter& parameter ) const;
-         template< typename T >
-            std::pair< std::optional< T >, bool > value( const tParameter& parameter ) const;
-
-         // Returns the value of requested parameter name.
-         // Return value is a pair:
-         //    - first:
-         //       - value if parameter exists and has value
-         //       - 'default_value' if parameter does not has value
-         //       - 'default_value' in other cases
-         //    - second:
-         //       - true if parameter exists
-         //       - false if not
-         std::pair< tValue, bool > value_or( const tParameter& parameter, const tValue& default_value ) const;
-         template< typename T >
-            std::pair< T, bool > value_or( const tParameter& parameter, const T& default_value ) const;
-
          void print( ) const;
+         const Parameter* const find( const char* const name ) const;
+         const char* const value( const char* const name ) const;
+         const char* const value_or( const char* const name, const char* const default_value ) const;
 
       protected:
          CmdLine::tSptr    mp_cmdline  = nullptr;
@@ -58,39 +31,5 @@ namespace carpc::tools::parameters {
          Config::tSptr     mp_config   = nullptr;
          std::vector< Base::tSptr >    m_params;
    };
-
-
-
-   template< typename T >
-   std::pair< std::optional< T >, bool > Params::value( const tParameter& parameter ) const
-   {
-      for( auto item: m_params )
-      {
-         if( nullptr == item )
-            continue;
-
-         auto value = item->value< T >( parameter );
-         if( value.second )
-            return value;
-      }
-
-      return std::make_pair( invalid_value, false );
-   }
-
-   template< typename T >
-   std::pair< T, bool > Params::value_or( const tParameter& parameter, const T& default_value ) const
-   {
-      for( auto item: m_params )
-      {
-         if( nullptr == item )
-            continue;
-
-         auto value = item->value_or< T >( parameter, default_value );
-         if( value.second )
-            return value;
-      }
-
-      return std::make_pair( default_value, false );
-   }
 
 } // namespace carpc::tools::parameters
