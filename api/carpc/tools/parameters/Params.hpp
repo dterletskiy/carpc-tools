@@ -13,7 +13,7 @@ namespace carpc::tools::parameters {
    class Params
    {
       public:
-         using tSptr = std::shared_ptr< Base >;
+         enum class eType : std::uint8_t { CMD, ENV, CFG, ANY };
 
       public:
          Params( int argc, char** argv, char** envp );
@@ -21,10 +21,10 @@ namespace carpc::tools::parameters {
 
       public:
          void print( ) const;
-         bool exists( const char* const name ) const;
-         const Parameter* const find( const char* const name ) const;
-         const char* const value( const char* const name ) const;
-         const char* const value_or( const char* const name, const char* const default_value ) const;
+         bool exists( const char* const name, const eType& type = eType::ANY ) const;
+         const Parameter* const find( const char* const name, const eType& type = eType::ANY ) const;
+         const char* const value( const char* const name, const eType& type = eType::ANY ) const;
+         const char* const value_or( const char* const name, const char* const default_value, const eType& type = eType::ANY ) const;
 
       protected:
          CmdLine::tSptr    mp_cmdline  = nullptr;

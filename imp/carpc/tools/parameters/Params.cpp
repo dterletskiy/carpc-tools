@@ -17,17 +17,14 @@ using namespace carpc::tools::parameters;
 Params::Params( int argc, char** argv, char** envp )
 {
    mp_cmdline = carpc::tools::parameters::CmdLine::create( argc, argv );
-   // mp_cmdline->print( );
 
    mp_env = carpc::tools::parameters::Env::create( envp );
-   // mp_env->print( );
 
    if( mp_cmdline )
    {
       if( auto param = mp_cmdline->find( "config" ) )
       {
          mp_config = carpc::tools::parameters::Config::create( param->value );
-         // mp_config->print( );
       }
    }
 
@@ -51,8 +48,25 @@ Params::Params( int argc, char** argv, char** envp )
    // m_params.push_back( Config::create( file_name ) );
 }
 
-const Parameter* const Params::find( const char* const name ) const
+const Parameter* const Params::find( const char* const name, const eType& type ) const
 {
+   switch( type )
+   {
+      case eType::CMD:
+      {
+         return mp_cmdline ? mp_cmdline->find( name ) : nullptr;
+      }
+      case eType::ENV:
+      {
+         return mp_env ? mp_env->find( name ) : nullptr;
+      }
+      case eType::CFG:
+      {
+         return mp_config ? mp_config->find( name ) : nullptr;
+      }
+      default: break;
+   }
+
    for( auto item: m_params )
    {
       if( const Parameter* const param = item->find( name ) )
@@ -64,22 +78,22 @@ const Parameter* const Params::find( const char* const name ) const
    return nullptr;
 }
 
-bool Params::exists( const char* const name ) const
+bool Params::exists( const char* const name, const eType& type ) const
 {
-   return nullptr != find( name );
+   return nullptr != find( name, type );
 }
 
-const char* const Params::value( const char* const name ) const
+const char* const Params::value( const char* const name, const eType& type ) const
 {
-   if( const Parameter* const param = find( name ) )
+   if( const Parameter* const param = find( name, type ) )
       return param->value;
 
    return nullptr;
 }
 
-const char* const Params::value_or( const char* const name, const char* const default_value ) const
+const char* const Params::value_or( const char* const name, const char* const default_value, const eType& type ) const
 {
-   if( const char* const v = value( name ) )
+   if( const char* const v = value( name, type ) )
       return v;
 
    return default_value;
